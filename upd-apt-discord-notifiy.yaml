@@ -11,14 +11,14 @@
     ansible_command_timeout: 900
 
   tasks:
-      - name: Send Discord message that playbook is running
+    - name: Send Discord message that playbook is running
       uri:
         url: "{{ discord_webhook_url }}"
         method: POST
         body_format: json
-        headers:
-          Content-Type: "application/json"
         body: '{"content": "Update running on {{ inventory_hostname }} "}'
+        headers:
+         Content-Type: "application/json"
         status_code: 204
       register: discord_playbook_running
       
