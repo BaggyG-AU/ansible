@@ -50,11 +50,7 @@
         body: "{\"content\":\"Update succeeded on {{ inventory_hostname }}\"}"
       when: apt_upgrade.changed
       register: discord_result_success
-
-    - name: Fail the playbook on Discord message failure (success)
-      fail:
-        msg: "Failed to send Discord message on success: {{ discord_result_success.msg }}"
-      when: discord_result_success.status != 200
+      failed_when: discord_result_success.status != 200
 
     - name: Send Discord message on update failure on remote hosts
       uri:
@@ -66,11 +62,12 @@
         body: "{\"content\":\"Update failed on {{ inventory_hostname }}\"}"
       when: apt_upgrade.failed
       register: discord_result_failure
+      failed_when: discord_result_failure.status != 200
 
     - name: Fail the playbook on Discord message failure (failure)
       fail:
         msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
-      when: discord_result_failure.status != 200
+      when: discord_result_failure.failed
       
     - name: Check if remote host reboot is required
       become: true
