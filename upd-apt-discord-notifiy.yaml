@@ -76,12 +76,11 @@
         body: "{\"content\":\"Update failed on {{ inventory_hostname }}\"}"
       when: apt_upgrade.failed
       register: discord_result_success
-      fail_when: discord_result_success.status != 200 #Fail the playbook on Discord message failure
 
- #   - name: Fail the playbook on Discord message failure (failure)
- #     fail:
- #       msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
- #     when: discord_result_failure.status.failed
+    - name: Fail the playbook on Discord message failure (failure)
+      fail:
+        msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
+      when: discord_result_failure.status.failed
       
     - name: Check if remote host reboot is required
       become: true
@@ -99,12 +98,11 @@
         body: "{\"content\":\"{{ inventory_hostname }} requires reboot\"}"
       when: reboot_required.stat.exists
       register: discord_result_failure_local
-      fail_when: discord_result_failure_local.status != 200 #Fail the playbook on Discord message failure
 
-#    - name: Fail the playbook on Discord message failure on local host (failure)
-#      fail:
-#        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
-#      when: discord_result_failure_local.status != 200
+    - name: Fail the playbook on Discord message failure on local host (failure)
+      fail:
+        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
+      when: discord_result_failure_local.status != 200
 
 - hosts: localhost
   gather_facts: true
