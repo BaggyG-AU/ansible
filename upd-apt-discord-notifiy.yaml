@@ -11,9 +11,13 @@
     ansible_command_timeout: 900
 
   tasks:
+    - name: Include vault
+      ansible.builtin.Include_vars:
+        file: discord
+            
     - name: Send Discord message that playbook is running
       uri:
-        url: "{{ discord_webhook_url }}"
+        url: "{{ discord }}"
         method: POST
         body_format: json
         body: '{"content": "Update running on {{ inventory_hostname }} "}'
