@@ -7,7 +7,7 @@
   vars:
     semphore_directory: "/home/semaphore"
     update_results_file: "/home/semaphore/automation-updates.txt"
-    discord_webhook_url: "https://discord.com/api/webhooks/1268790490774507520/zrgQx-7tNSTkDeP_fWxBcNBfV76ynbD1WgbrS218yTmTcx2mjgU2Vr0vXCdKH-d9-iq6"
+    discord_webhook_url: "<your_discord_webhook>" #Consider encrypting you discord webhook with anisble-vault
     ansible_command_timeout: 900
 
   tasks:

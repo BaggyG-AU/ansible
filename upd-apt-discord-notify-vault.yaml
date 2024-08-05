@@ -7,6 +7,7 @@
   vars:
     semphore_directory: "/home/semaphore"
     update_results_file: "/home/semaphore/automation-updates.txt"
+#Encrypt you discord webhook url with anisble-vault    
     discord_webhook_url: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           38343065313532623738393139613235396639383662373333623061396466653364653834356430
