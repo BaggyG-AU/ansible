@@ -16,11 +16,14 @@
         path: "{{ semphore_directory }}"
       register: semaphore_directory_stat
       
-    - name: Create semaphore direcory if it not exist
-      ansible.builtin.file:
+    - name: Create semaphore directory if it not exist
+      file:
         path: /home/semaphore
         state: directory
-      when: not semaphore_directory_stat.exists
+        mode: 0755
+        group: root
+        owner: root
+      when: semaphore_directory_stat.exists = false
     
     - name: Check for the existence of update results file on remote hosts
       stat:
