@@ -160,7 +160,7 @@
       register: reboot_required
       
     - name: Send Discord message if local host requires reboot
-          uri:
+      uri:
         url: "{{ discord_webhook_url }}"
         method: POST
         body_format: json
