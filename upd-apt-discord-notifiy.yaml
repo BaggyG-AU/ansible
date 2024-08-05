@@ -18,8 +18,8 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: "{\"content\":\"Update running on {{ inventory_hostname }}\"}"
-      when: apt_upgrade.changed
+        body: '{"content": "Update running on {{ inventory_hostname }} "}'
+        status_code: 204
       register: discord_playbook_running
       
     - name: Check for the existence of semaphore directory on remote hosts
