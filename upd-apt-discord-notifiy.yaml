@@ -74,6 +74,7 @@
         headers:
           Content-Type: "application/json"
         body: "{\"content\":\"Update failed on {{ inventory_hostname }}\"}"
+        status_code: 200
       when: apt_upgrade.failed
       register: discord_result_success
 
