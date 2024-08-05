@@ -21,7 +21,7 @@
           3038323831383739643137313566613662623736313731626334
     ansible_command_timeout: 900
             
- tasks:
+  tasks:
     - name: Send Discord message that playbook is running
       uri:
         url: "{{ discord_webhook_url }}"
