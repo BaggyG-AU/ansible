@@ -14,7 +14,7 @@
     - name: Check for the existence of semaphore directory on remote hosts
       stat:
         path: "{{ semphore_directory }}"
-      register: semaphore_directory_stat
+      register: semaphore_directory_check
       
     - name: Create semaphore directory if it not exist
       file:
@@ -23,7 +23,7 @@
         mode: 0755
         group: root
         owner: root
-      when: semaphore_directory_stat.exists == false
+      when: semaphore_directory_check.stat.exists == false
     
     - name: Check for the existence of update results file on remote hosts
       stat:
