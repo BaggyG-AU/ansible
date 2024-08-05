@@ -16,7 +16,7 @@
         path: "{{ semphore_directory }}"
       register: semaphore_directory_stat
       
-    - name: Create semaphore direcory if it doesn't exist
+    - name: Create semaphore direcory if it not exist
       ansible.builtin.file:
         path: /home/semaphore
         state: directory
