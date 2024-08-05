@@ -16,14 +16,14 @@
         path: "{{ semphore_directory }}"
       register: semaphore_directory_check
       
-    - name: Create semaphore directory if it not exist
+    - name: Create semaphore directory if it is absent
       file:
         path: /home/semaphore
         state: directory
         mode: 0755
         group: root
         owner: root
-      when: semaphore_directory_check.stat.exists == false
+      when: semaphore_directory_check.stat.absent
     
     - name: Check for the existence of update results file on remote hosts
       stat:
