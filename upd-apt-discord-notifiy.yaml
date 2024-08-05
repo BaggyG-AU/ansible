@@ -5,11 +5,23 @@
   become_user: root
   serial: 1  # Ensures the playbook runs on one server at a time
   vars:
+    semphore_directory: "/home/semaphore"
     update_results_file: "/home/semaphore/automation-updates.txt"
     discord_webhook_url: "https://discord.com/api/webhooks/1268790490774507520/zrgQx-7tNSTkDeP_fWxBcNBfV76ynbD1WgbrS218yTmTcx2mjgU2Vr0vXCdKH-d9-iq6"
     ansible_command_timeout: 900
 
   tasks:
+    - name: Check for the existence of semaphore directory on remote hosts
+      stat:
+        path: "{{ semphore_directory }}"
+      register: semaphore_directory_stat
+      
+    - name: Create semaphore direcory if it doesn't exist
+      ansible.builtin.file:
+        path: /home/semaphore
+        state: directory
+      when: not semaphore_directory_stat.exists
+    
     - name: Check for the existence of update results file on remote hosts
       stat:
         path: "{{ update_results_file }}"
