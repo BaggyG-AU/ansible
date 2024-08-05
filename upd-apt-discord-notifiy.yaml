@@ -12,7 +12,7 @@
 
   tasks:
     - name: Include vault
-      ansible.builtin.Include_vars:
+      ansible.builtin.include_vars:
         file: discord
             
     - name: Send Discord message that playbook is running
