@@ -74,6 +74,7 @@
         headers:
           Content-Type: "application/json"
         body: "{\"content\":\"Update succeeded on {{ inventory_hostname }}\"}"
+        status_code: 204
       when: apt_upgrade.changed
       register: discord_result_success
 
@@ -85,7 +86,7 @@
         headers:
           Content-Type: "application/json"
         body: "{\"content\":\"Update failed on {{ inventory_hostname }}\"}"
-        status_code: 200
+        status_code: 204
       when: apt_upgrade.failed
       register: discord_result_success
 
@@ -108,6 +109,7 @@
         headers:
           Content-Type: "application/json"
         body: "{\"content\":\"{{ inventory_hostname }} requires reboot\"}"
+        status_code: 204
       when: reboot_required.stat.exists
       register: discord_result_failure_local
 
