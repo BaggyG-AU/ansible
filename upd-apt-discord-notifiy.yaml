@@ -23,7 +23,7 @@
         mode: 0755
         group: root
         owner: root
-      when: semaphore_directory_stat.exists = false
+      when: semaphore_directory_stat.exists == false
     
     - name: Check for the existence of update results file on remote hosts
       stat:
