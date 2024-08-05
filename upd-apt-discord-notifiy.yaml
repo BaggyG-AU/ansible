@@ -78,10 +78,10 @@
       when: apt_upgrade.failed
       register: discord_result_success
 
-    - name: Fail the playbook on Discord message failure (failure)
-      fail:
-        msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
-      when: discord_result_success.status != 200
+ #   - name: Fail the playbook on Discord message failure (failure)
+ #     fail:
+ #       msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
+ #     when: discord_result_success.status != 200
       
     - name: Check if remote host reboot is required
       become: true
@@ -100,10 +100,10 @@
       when: reboot_required.stat.exists
       register: discord_result_failure_local
 
-    - name: Fail the playbook on Discord message failure on local host (failure)
-      fail:
-        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
-      when: discord_result_failure_local.status != 200
+#    - name: Fail the playbook on Discord message failure on local host (failure)
+#      fail:
+#        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
+#      when: discord_result_failure_local.status != 200
 
 - hosts: localhost
   gather_facts: true
@@ -154,10 +154,10 @@
       when: apt_upgrade.changed
       register: discord_result_success_local
 
-    - name: Fail the playbook on Discord message failure on local host (success)
-      fail:
-        msg: "Failed to send Discord message on success: {{ discord_result_success_local.msg }}"
-      when: discord_result_success_local.status != 200
+ #   - name: Fail the playbook on Discord message failure on local host (success)
+ #     fail:
+ #       msg: "Failed to send Discord message on success: {{ discord_result_success_local.msg }}"
+ #     when: discord_result_success_local.status != 200
 
     - name: Send Discord message on update failure on local host
       uri:
@@ -170,10 +170,10 @@
       when: apt_upgrade.failed
       register: discord_result_failure_local
 
-    - name: Fail the playbook on Discord message failure on local host (failure)
-      fail:
-        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
-      when: discord_result_failure_local.status != 200
+#    - name: Fail the playbook on Discord message failure on local host (failure)
+#      fail:
+#        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
+#      when: discord_result_failure_local.status != 200
 
     - name: Check if local host reboot is required
       become: true
@@ -192,10 +192,10 @@
       when: reboot_required.stat.exists
       register: discord_result_failure_local
 
-    - name: Fail the playbook on Discord message failure on local host (failure)
-      fail:
-        msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
-      when: discord_result_failure_local.status != 200
+#   - name: Fail the playbook on Discord message failure on local host (failure)
+#     fail:
+#       msg: "Failed to send Discord message on failure: {{ discord_result_failure_local.msg }}"
+#     when: discord_result_failure_local.status != 200
 
 #      command: "needs-restarting -r || reboot"
 #      async: 0
