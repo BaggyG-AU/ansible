@@ -80,7 +80,7 @@
     - name: Fail the playbook on Discord message failure (failure)
       fail:
         msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
-      when: discord_result_success.status == failed
+      when: discord_result_success.status != 200
       
     - name: Check if remote host reboot is required
       become: true
