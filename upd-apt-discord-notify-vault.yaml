@@ -86,7 +86,7 @@
           Content-Type: "application/json"
         body: "{\"content\":\"No updates avaialble for {{ inventory_hostname }}\"}"
         status_code: 204
-      when: update_count.stdout| == 0
+      when: update_count.stdout | int == 0
       register: discord_result_nochange
 
     - name: Capture update results on remote hosts
@@ -118,11 +118,6 @@
         status_code: 204
       when: apt_upgrade.failed
       register: discord_result_failure
-
- #   - name: Fail the playbook on Discord message failure (failure)
- #     fail:
- #       msg: "Failed to send Discord message on failure: {{ discord_result_failure.msg }}"
- #     when: discord_result_success.status != 200
       
     - name: Check if remote host reboot is required
       become: true
