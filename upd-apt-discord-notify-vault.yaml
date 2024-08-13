@@ -71,6 +71,23 @@
         autoremove: yes
         autoclean: yes
       register: apt_upgrade
+    
+    -name: Check if there are any available updates
+    shell: apt list --upgradabe | grep -v 'Listing...' |wc -1
+    register: update_count
+    changed_when: false
+    
+    - name: Send Discord message when no update is required
+      uri:
+        url: "{{ discord_webhook_url }}"
+        method: POST
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+        body: "{\"content\":\"No updates avaialble for {{ inventory_hostname }}\"}"
+        status_code: 204
+      when: updae_count.stdout|==0
+      register: discord_result_nochange
 
     - name: Capture update results on remote hosts
       lineinfile:
@@ -89,7 +106,7 @@
         status_code: 204
       when: apt_upgrade.changed
       register: discord_result_success
-
+      
     - name: Send Discord message on update failure on remote hosts
       uri:
         url: "{{ discord_webhook_url }}"
@@ -100,7 +117,7 @@
         body: "{\"content\":\"Update failed on {{ inventory_hostname }}\"}"
         status_code: 204
       when: apt_upgrade.failed
-      register: discord_result_success
+      register: discord_result_failure
 
  #   - name: Fail the playbook on Discord message failure (failure)
  #     fail:
