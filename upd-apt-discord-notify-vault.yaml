@@ -73,7 +73,7 @@
       register: apt_upgrade
     
     - name: Check if there are any available updates
-      shell: apt list --upgradabe | grep -v 'Listing...' |wc -1
+      shell: apt list --upgradabe | grep -v 'Listing...' | wc -l
       register: update_count
       changed_when: false
     
