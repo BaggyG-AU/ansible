@@ -102,7 +102,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: "{"content": "```diff\n+Update succeeded on {{ inventory_hostname }}\n```"}"
+        body: '{"content": "```diff\n+Update succeeded on {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: apt_upgrade.changed
       register: discord_result_success
@@ -114,7 +114,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: "{"content": "Update failed on {{ inventory_hostname }}\"}"
+        body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: apt_upgrade.failed
       register: discord_result_failure
@@ -132,7 +132,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: "{ "content": "```json\n{{ inventory_hostname }} requires reboot\n```"}"
+        body: '{"content": "```json\n{{ inventory_hostname }} requires reboot\n```"}'
         status_code: 204
       when: reboot_required.stat.exists
       register: discord_result_failure_local
