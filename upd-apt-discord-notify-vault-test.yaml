@@ -84,7 +84,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: "{"content": "```diff\n+ No updates avaialble for {{ inventory_hostname }}\n```"}"
+        body: '{"content": "```diff\n+ No updates avaialble for {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: update_count.stdout | int == 0
       register: discord_result_nochange
