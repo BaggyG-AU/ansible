@@ -72,10 +72,10 @@
         autoclean: yes
       register: apt_upgrade
     
-    -name: Check if there are any available updates
-    shell: apt list --upgradabe | grep -v 'Listing...' |wc -1
-    register: update_count
-    changed_when: false
+    - name: Check if there are any available updates
+      shell: apt list --upgradabe | grep -v 'Listing...' |wc -1
+      register: update_count
+      changed_when: false
     
     - name: Send Discord message when no update is required
       uri:
