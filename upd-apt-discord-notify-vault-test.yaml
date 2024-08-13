@@ -64,10 +64,13 @@
         content: ""
         dest: /home/semaphore/automation-updates.txt
 
-    - name: Run updates on remote hosts
+    - name: Run upgrades on remote hosts
       apt:
-        update_cache: yes
-      register: apt_update
+        update_cache: yes        
+        upgrade: safe
+        autoremove: yes
+        autoclean: yes
+      register: apt_upgrade
     
     - name: Check if there are any available updates
       shell: apt list --upgradable | grep -v 'Listing...' | wc -l
@@ -85,13 +88,6 @@
         status_code: 204
       when: update_count.stdout | int == 0
       register: discord_result_nochange
-
-    - name: Run upgrades on remote hosts
-      apt:
-        upgrade: safe
-        autoremove: yes
-        autoclean: yes
-      register: apt_upgrade
 
     - name: Capture update results on remote hosts
       lineinfile:
