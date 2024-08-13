@@ -28,6 +28,7 @@
         url: "{{ discord_webhook_url }}"
         method: POST
         body_format: json
+        # Using ** for bold
         body: '{"content": "**Update running on {{ inventory_hostname }} **"}'
         headers:
          Content-Type: "application/json"
@@ -84,7 +85,8 @@
         body_format: json
         headers:
           Content-Type: "application/json"
-        body: '{"content": "```diff\n+ No updates avaialble for {{ inventory_hostname }}\n```"}'
+        #Using ini markdown format for green text
+        body: '{"content": "```ini\n No updates avaialble for {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: update_count.stdout | int == 0
       register: discord_result_nochange
@@ -114,6 +116,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
+        #Using JSON markdown for red text
         body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: apt_upgrade.failed
@@ -132,6 +135,7 @@
         body_format: json
         headers:
           Content-Type: "application/json"
+        #Using JSON markdown for red text
         body: '{"content": "```json\n{{ inventory_hostname }} requires reboot\n```"}'
         status_code: 204
       when: reboot_required.stat.exists
