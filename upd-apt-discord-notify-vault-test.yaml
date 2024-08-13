@@ -86,7 +86,7 @@
         headers:
           Content-Type: "application/json"
         #Using ini markdown format for green text
-        body: '{"content": "```ini\n No updates avaialble for {{ inventory_hostname }}\n```"}'
+        body: '{"content": "```diff\n+ No updates avaialble for {{ inventory_hostname }}\n```"}'
         status_code: 204
       when: update_count.stdout | int == 0
       register: discord_result_nochange
