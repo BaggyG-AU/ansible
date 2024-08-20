@@ -69,13 +69,15 @@
       apt:
         update_cache: yes        
       register: apt_update
-    
-    - name: Check if there are any available updates
-      shell: apt list --upgradable | grep -v 'Listing...' | wc -l
-      register: update_count
       changed_when: 'packages can be updated' in update_count.stdout
       failed_when: 'packages can be updated' not in update_count.stdout
- #     changed_when: false
+    
+#    - name: Check if there are any available updates
+#      shell: apt list --upgradable | grep -v 'Listing...' | wc -l
+#      register: update_count
+#      changed_when: 'packages can be updated' in update_count.stdout
+#      failed_when: 'packages can be updated' not in update_count.stdout
+##     changed_when: false
     
     - name: Send Discord message when no update is required
       uri:
@@ -87,7 +89,7 @@
         #Using ini markdown format for green text
         body: '{"content": "```diff\n+ No updates avaialble for {{ inventory_hostname }}\n```"}'
         status_code: 204
-      when: update_count.failed
+      when: apt_update.failed
 #      when: update_count.stdout | int == 0
       register: discord_result_nochange
       
@@ -96,7 +98,7 @@
         upgrade: safe
         autoremove: yes
         autoclean: yes
-      when: update_count.changed
+      when: apt_update.changed
  #     when: update_count.stdout | int != 0
       register: apt_upgrade
 
