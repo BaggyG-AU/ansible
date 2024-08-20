@@ -88,7 +88,7 @@
       when: update_count.stdout | int == 0
       register: discord_result_nochange
 
-   - name: Run upgrades on remote hosts
+    - name: Run upgrades on remote hosts
       apt:      
         upgrade: safe
         autoremove: yes
