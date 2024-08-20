@@ -65,13 +65,10 @@
         content: ""
         dest: /home/semaphore/automation-updates.txt
 
-    - name: Run upgrades on remote hosts
+    - name: Run updates on remote hosts
       apt:
-        update_cache: yes        
-        upgrade: safe
-        autoremove: yes
-        autoclean: yes
-      register: apt_upgrade
+        update_cache: yes
+      register: apt_update
     
     - name: Check if there are any available updates
       shell: apt list --upgradable | grep -v 'Listing...' | wc -l
@@ -91,6 +88,14 @@
       when: update_count.stdout | int == 0
       register: discord_result_nochange
 
+    - name: Run upgrades on remote hosts
+      apt:      
+        upgrade: safe
+        autoremove: yes
+        autoclean: yes
+      register: apt_upgrade
+      when: update_count.stdout | int != 0
+
     - name: Capture update results on remote hosts
       lineinfile:
         path: "{{ update_results_file }}"
@@ -109,18 +114,18 @@
       when: apt_upgrade.changed
       register: discord_result_success
       
-    - name: Send Discord message on update failure on remote hosts
-      uri:
-        url: "{{ discord_webhook_url }}"
-        method: POST
-        body_format: json
-        headers:
-          Content-Type: "application/json"
+ #   - name: Send Discord message on update failure on remote hosts
+ #     uri:
+ #       url: "{{ discord_webhook_url }}"
+ #       method: POST
+ #       body_format: json
+ #       headers:
+ #         Content-Type: "application/json"
         #Using JSON markdown for red text
-        body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
-        status_code: 204
-      when: apt_upgrade.failed
-      register: discord_result_failure
+ #       body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
+ #       status_code: 204
+ #     when: apt_upgrade.failed
+ #     register: discord_result_failure
       
     - name: Check if remote host reboot is required
       become: true
