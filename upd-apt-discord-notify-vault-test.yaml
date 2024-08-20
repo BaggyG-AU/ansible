@@ -69,8 +69,8 @@
       apt:
         update_cache: yes        
       register: apt_update
-      changed_when: '"packages can be updated" in update_count.stdout'
-      failed_when: '"packages can be updated" not in update_count.stdout'
+      changed_when: '"packages can be updated" in apt_update.stdout'
+      failed_when: '"packages can be updated" not in apt_update.stdout'
     
 #    - name: Check if there are any available updates
 #      shell: apt list --upgradable | grep -v 'Listing...' | wc -l
