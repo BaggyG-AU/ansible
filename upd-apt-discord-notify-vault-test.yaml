@@ -114,18 +114,18 @@
       when: apt_upgrade.changed
       register: discord_result_success
       
-    - name: Send Discord message on update failure on remote hosts
-      uri:
-        url: "{{ discord_webhook_url }}"
-        method: POST
-        body_format: json
-        headers:
-          Content-Type: "application/json"
+ #   - name: Send Discord message on update failure on remote hosts
+ #     uri:
+ #       url: "{{ discord_webhook_url }}"
+ #       method: POST
+ #       body_format: json
+ #       headers:
+ #         Content-Type: "application/json"
         #Using JSON markdown for red text
-        body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
-        status_code: 204
-      when: apt_upgrade.failed
-      register: discord_result_failure
+ #       body: '{"content": "```json\nUpdate failed on {{ inventory_hostname }}\n```"}'
+ #       status_code: 204
+ #     when: apt_upgrade.failed
+ #     register: discord_result_failure
       
     - name: Check if remote host reboot is required
       become: true
