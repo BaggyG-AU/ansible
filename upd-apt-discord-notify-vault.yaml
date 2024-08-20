@@ -95,7 +95,7 @@
       lineinfile:
         path: "{{ update_results_file }}"
         line: "{{ inventory_hostname }} - Update {{ 'succeeded' if apt_upgrade.changed else 'failed' }}"
-      when: apt_upgrade.changed or apt_upgrade.failed
+      when: apt_upgrade.changed #or apt_upgrade.failed
 
     - name: Send Discord message on update success on remote hosts
       uri:
